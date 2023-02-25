@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {FlexContainer} from "../../../assets/styles/components";
+import {FlexContainer} from "../../../../styles/components";
 
 export const TodoGridContainer = styled.div`
   display: grid;
@@ -7,14 +7,14 @@ export const TodoGridContainer = styled.div`
   grid-auto-rows: minmax(15vh, 15vh);
   grid-template-rows: 40px;
   width: 25%;
-  height: 100vh;
+  height: 100%;
 `
 
 export const TodoGridItem = styled.div<GridItemProps>`
   border-bottom: 1px solid #E8ECEE;
-  border-right: ${({borderRight}) => borderRight && '1px solid #E8ECEE'};
+  border-right: ${p => p.borderRight || '1px solid #E8ECEE'};
   padding: 0 20px;
-  background-color: ${({bg}) => bg ? '#F6F8F9' : '#fff'};
+  background-color: ${p => p.bg ? p.theme.colors.bgSecondary : p.theme.colors.bgPrimary};
 `
 
 export const TodoWrapper = styled(FlexContainer)`
@@ -26,5 +26,5 @@ export const TodoWrapper = styled(FlexContainer)`
 //types
 type GridItemProps = {
     bg?: boolean
-    borderRight?: boolean
+    borderRight?: string
 }
