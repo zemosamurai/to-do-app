@@ -1,10 +1,11 @@
 import React, {ChangeEvent} from 'react';
-import {TaskStatuses} from "../../../../api/todo-api";
+import {TaskPriorities, TaskStatuses} from "../../../../api/todo-api";
 import {useAppDispatch} from "../../../../store/hooks";
-import {deleteTaskTC, updateTaskTC} from "./taskSlice";
-import {TaskGridItem} from "../TaskList.styles";
-import {FlexContainer, Text, Title3} from "../../../../assets/styles/components";
-import {StatusIndicator} from "./Task.styles";
+import {updateTaskTC} from "./taskSlice";
+import {TaskGridItem} from "../styles/TaskList.styles";
+import {FlexContainer, SuperText, Title3} from "../../../../styles/components";
+import {PrioritiesEl, StatusIndicator, TaskWrapper} from "./styles/Task.styles";
+import {DotMenu} from "../../../../components/DotMenu/DotMenu";
 
 
 type TaskPropsType = {
@@ -12,13 +13,18 @@ type TaskPropsType = {
     taskId: string
     status: TaskStatuses
     title: string
+    priority: TaskPriorities
+    setModalActive: (modalActive: boolean) => void
 }
 
 
-export const Task = ({taskId, status, todoId, title}: TaskPropsType) => {
+export const Task = ({taskId, status, todoId, title, priority, setModalActive}: TaskPropsType) => {
     const dispatch = useAppDispatch()
 
-    const removeTask = () => dispatch(deleteTaskTC({todoId, taskId}))
+    const openModal = () => {
+        setModalActive(true)
+        // dispatch(deleteTaskTC({todoId, taskId}))
+    }
 
     const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         const checked = e.currentTarget.checked
@@ -26,36 +32,52 @@ export const Task = ({taskId, status, todoId, title}: TaskPropsType) => {
         dispatch(updateTaskTC({todoId, taskId, domainModel: {status}}))
     }
 
+    const priorityContent = {
+        [TaskPriorities.Low]: 'Low',
+        [TaskPriorities.Medium]: 'Medium',
+        [TaskPriorities.High]: 'High'
+    }
+
     return (
         <>
             <TaskGridItem paddingLeft={'20px'}>
-                <FlexContainer>
-                    <StatusIndicator/>
-                    <FlexContainer direction={'column'} >
+                <TaskWrapper>
+                    <StatusIndicator status={status}/>
+                    <FlexContainer direction={'column'}>
                         <Title3>{title}</Title3>
-                        <Text>Description from task</Text>
+                        <SuperText>Description from task</SuperText>
                     </FlexContainer>
-                </FlexContainer>
+                </TaskWrapper>
             </TaskGridItem>
 
             <TaskGridItem>
-                <input
-                    type="checkbox"
-                    checked={status === TaskStatuses.Completed}
-                    onChange={onChangeTaskStatus}
-                />
+                <TaskWrapper>
+                    <input
+                        type="checkbox"
+                        checked={status === TaskStatuses.Completed}
+                        onChange={onChangeTaskStatus}
+                    />
+                </TaskWrapper>
             </TaskGridItem>
 
             <TaskGridItem>
-                <Text>may1 - day2</Text>
+                <TaskWrapper>
+                    <SuperText>may1 - day2</SuperText>
+                </TaskWrapper>
             </TaskGridItem>
 
             <TaskGridItem>
-                <Text>Medium</Text>
+                <TaskWrapper>
+                    <PrioritiesEl priority={priority}>
+                        {priorityContent[priority]}
+                    </PrioritiesEl>
+                </TaskWrapper>
             </TaskGridItem>
 
             <TaskGridItem>
-                <button onClick={removeTask}>x</button>
+                <TaskWrapper>
+                    <DotMenu openModal={openModal} rotate={90}/>
+                </TaskWrapper>
             </TaskGridItem>
         </>
     );
