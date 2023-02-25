@@ -6,6 +6,11 @@ export const theme = {
         warning: '#FF9C02',
         danger: '#FF3F21',
 
-        bg: '#fff'
+        bgPrimary: '#fff',
+        bgSecondary: '#F6F8F9',
+
+        fontPrimary: '#000',
+        fontSecondary: '#6F7782',
+        fontWhite: '#fff'
     }
 }
