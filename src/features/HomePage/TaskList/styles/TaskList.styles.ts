@@ -11,15 +11,13 @@ export const TaskGridContainer = styled.div`
 
 export const TaskGridItem = styled.div<GridItemProps>`
   border-bottom: 1px solid #E8ECEE;
-  display: flex;
-  align-items: center;
-  padding-left: ${({paddingLeft = 'none'}) => paddingLeft};
-  background-color: ${({bg = 'fff'}) => bg};
+  padding-left: ${p => p.paddingLeft || 'none'};
+  background-color: ${p => p.bg ? p.theme.colors.bgSecondary : p.theme.colors.bgPrimary};
 `
 
 //types
 
 type GridItemProps = {
-    bg?: string
+    bg?: boolean
     paddingLeft?: string
 }

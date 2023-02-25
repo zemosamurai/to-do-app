@@ -4,9 +4,10 @@ import {fetchTodosTC} from "./TodoList/Todo/todoSlice";
 import {Navigate} from "react-router-dom";
 import {TodoList} from "./TodoList/TodoList";
 import {TaskList} from "./TaskList/TaskList";
-import {FlexContainer} from "../../assets/styles/components";
+import {FlexContainer} from "../../styles/components";
 
 export const HomePage = () => {
+
     const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
 
@@ -17,13 +18,6 @@ export const HomePage = () => {
         dispatch(fetchTodosTC())
     }, [])
 
-    // const addTodo = (title: string) => dispatch(addTodoTC(title))
-    // const logOut = () => {
-    //     dispatch(logOutTC())
-    // }
-
-    const TitleColumnJSX = <div style={{backgroundColor: 'red', height: '40px'}}></div>
-
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
     }
@@ -31,7 +25,7 @@ export const HomePage = () => {
 
     return (
         <>
-            {TitleColumnJSX}
+            <div style={{backgroundColor: 'red', height: '40px'}}></div>
             <FlexContainer>
                 <TodoList/>
                 <TaskList/>
