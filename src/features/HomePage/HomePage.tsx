@@ -5,6 +5,7 @@ import {Navigate} from "react-router-dom";
 import {TodoList} from "./TodoList/TodoList";
 import {TaskList} from "./TaskList/TaskList";
 import {FlexContainer} from "../../styles/components";
+import {Header} from "../Header/Header";
 
 export const HomePage = () => {
 
@@ -25,7 +26,7 @@ export const HomePage = () => {
 
     return (
         <>
-            <div style={{backgroundColor: 'red', height: '40px'}}></div>
+            <Header/>
             <FlexContainer>
                 <TodoList/>
                 <TaskList/>

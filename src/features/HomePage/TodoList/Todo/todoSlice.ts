@@ -1,7 +1,6 @@
 import {createAction, createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AppDispatchType} from "../../../../store/store";
 import {todoApi, TodolistType} from "../../../../api/todo-api";
-import {fetchTasksTC} from "../../TaskList/Task/taskSlice";
 import {RequestStatusType, setLoading} from "../../../../app/appSlice";
 import axios from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../../../utils/error-utils";
@@ -65,9 +64,9 @@ export const fetchTodosTC = createAsyncThunk<unknown, undefined, AsyncThunkConfi
         try {
             const res = await todoApi.getTodolists()
             dispatch(setTodos(res.data))
-            res.data.forEach((el) => {
-                dispatch(fetchTasksTC(el.id))
-            })
+            // res.data.forEach((el) => {
+            //     dispatch(fetchTasksTC(el.id))
+            // })
             dispatch(setLoading({status: 'succeeded'}))
         } catch (e) {
             if (axios.isAxiosError<{ error: string }>(e)) {

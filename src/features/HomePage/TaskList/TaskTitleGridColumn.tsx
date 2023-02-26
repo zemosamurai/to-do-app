@@ -1,7 +1,7 @@
 import React from 'react';
-import {TaskGridItem} from "./styles/TaskList.styles";
+import {TaskGridItem} from "./styles/styles";
 import {SuperText} from "../../../styles/components";
-import {TaskWrapper} from "./Task/styles/Task.styles";
+import {TaskWrapper} from "./Task/styles/styles";
 
 export const TaskTitleGridColumn = () => {
     return <>

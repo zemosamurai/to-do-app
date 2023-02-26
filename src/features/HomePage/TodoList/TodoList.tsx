@@ -1,22 +1,16 @@
-import React, {useState} from 'react';
-import {useAppSelector} from "../../../store/hooks";
-import {TodoDomainType} from "./Todo/todoSlice";
+import React from 'react';
+import {useAppDispatch, useAppSelector} from "../../../store/hooks";
+import {addTodoTC, TodoDomainType} from "./Todo/todoSlice";
 import {Todo} from "./Todo/Todo";
-import {TodoGridContainer, TodoGridItem, TodoWrapper} from "./styles/TodoList.styles";
+import {AddTodo, TodoGridContainer, TodoGridItem, TodoWrapper} from "./styles/styles";
 import {SuperText} from "../../../styles/components";
-import {ModalTodo} from "../../../components/ModalTodo/ModalTodo";
-import {FormChangeTodo} from "./FormChangeTodo/FormChangeTodo";
+import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 
 
 export const TodoList = () => {
+    const dispatch = useAppDispatch()
     const todos = useAppSelector<TodoDomainType[]>(state => state.todo.todos)
-    const isSelectTodoId = useAppSelector<string>(state => state.todo.isSelectTodoId)
-    const [modalActive, setModalActive] = useState(false)
-
-
-    const removeTodo = () => {
-        console.log(isSelectTodoId)
-    }
+    const addTodo = (title: string) => dispatch(addTodoTC(title))
 
     const TodosJSX = todos.map(el => {
         return (
@@ -24,7 +18,6 @@ export const TodoList = () => {
                 key={el.id}
                 todoId={el.id}
                 title={el.title}
-                setModalActive={setModalActive}
             />
         )
     })
@@ -40,12 +33,12 @@ export const TodoList = () => {
                     </TodoWrapper>
                 </TodoGridItem>
 
+                <AddTodo justify={'center'} align={'center'}>
+                    <AddItemForm title={'Project'} addItem={addTodo}/>
+                </AddTodo>
+
                 {TodosJSX}
             </TodoGridContainer>
-
-            <ModalTodo active={modalActive} setActive={setModalActive}>
-                <FormChangeTodo todoId={isSelectTodoId} removeTodo={removeTodo}/>
-            </ModalTodo>
         </>
     )
 }
