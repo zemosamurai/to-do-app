@@ -1,35 +1,31 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {TaskPriorities, TaskStatuses} from "../../../../api/todo-api";
 import {useAppDispatch} from "../../../../store/hooks";
-import {updateTaskTC} from "./taskSlice";
-import {TaskGridItem} from "../styles/TaskList.styles";
+import {TaskDomainType, updateTaskTC} from "./taskSlice";
+import {TaskGridItem} from "../styles/styles";
 import {FlexContainer, SuperText, Title3} from "../../../../styles/components";
-import {PrioritiesEl, StatusIndicator, TaskWrapper} from "./styles/Task.styles";
+import { PrioritiesEl, StatusIndicator, TaskWrapper} from "./styles/styles";
 import {DotMenu} from "../../../../components/DotMenu/DotMenu";
+import {ModalTodo} from "../../../../components/ModalTodo/ModalTodo";
+import {FormChangeTask} from "./FormChangeTask/FormChangeTask";
 
 
-type TaskPropsType = {
-    todoId: string
-    taskId: string
-    status: TaskStatuses
-    title: string
-    priority: TaskPriorities
-    setModalActive: (modalActive: boolean) => void
+export type TaskPropsType = {
+    task: TaskDomainType
 }
 
 
-export const Task = ({taskId, status, todoId, title, priority, setModalActive}: TaskPropsType) => {
+export const Task = ({task}: TaskPropsType) => {
     const dispatch = useAppDispatch()
+    const [modalActive, setModalActive] = useState(false)
 
-    const openModal = () => {
-        setModalActive(true)
-        // dispatch(deleteTaskTC({todoId, taskId}))
-    }
+    const openModal = () => setModalActive(true)
+
 
     const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         const checked = e.currentTarget.checked
         const status = checked ? TaskStatuses.Completed : TaskStatuses.New
-        dispatch(updateTaskTC({todoId, taskId, domainModel: {status}}))
+        dispatch(updateTaskTC({todoId: task.todoListId, taskId: task.id, domainModel: {status}}))
     }
 
     const priorityContent = {
@@ -38,14 +34,37 @@ export const Task = ({taskId, status, todoId, title, priority, setModalActive}: 
         [TaskPriorities.High]: 'High'
     }
 
+    const formDate = (startDate: string | null, deadline: string | null) => {
+        if (!!startDate && !!deadline) {
+            const start = new Date(startDate)
+            const end = new Date(deadline)
+            const monthTitle = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
+                'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+
+            const startDay = start.getDate().toString()
+            const startMount = monthTitle[start.getMonth()]
+            const deadlineDay = end.getDate().toString()
+            const deadlineMount = monthTitle[end.getMonth()]
+
+
+            return `${startMount} ${startDay} - ${deadlineMount} ${deadlineDay}`
+        } else {
+            return 'none date'
+        }
+
+    }
+
+
     return (
         <>
             <TaskGridItem paddingLeft={'20px'}>
                 <TaskWrapper>
-                    <StatusIndicator status={status}/>
+                    <StatusIndicator status={task.status}/>
                     <FlexContainer direction={'column'}>
-                        <Title3>{title}</Title3>
-                        <SuperText>Description from task</SuperText>
+                        <Title3>{task.title}</Title3>
+                        <SuperText>
+                            {!!task.description ? task.description : 'Description from task'}
+                        </SuperText>
                     </FlexContainer>
                 </TaskWrapper>
             </TaskGridItem>
@@ -54,7 +73,7 @@ export const Task = ({taskId, status, todoId, title, priority, setModalActive}: 
                 <TaskWrapper>
                     <input
                         type="checkbox"
-                        checked={status === TaskStatuses.Completed}
+                        checked={task.status === TaskStatuses.Completed}
                         onChange={onChangeTaskStatus}
                     />
                 </TaskWrapper>
@@ -62,14 +81,14 @@ export const Task = ({taskId, status, todoId, title, priority, setModalActive}: 
 
             <TaskGridItem>
                 <TaskWrapper>
-                    <SuperText>may1 - day2</SuperText>
+                    <SuperText>{formDate(task.startDate, task.deadline)}</SuperText>
                 </TaskWrapper>
             </TaskGridItem>
 
             <TaskGridItem>
                 <TaskWrapper>
-                    <PrioritiesEl priority={priority}>
-                        {priorityContent[priority]}
+                    <PrioritiesEl priority={task.priority}>
+                        {priorityContent[task.priority]}
                     </PrioritiesEl>
                 </TaskWrapper>
             </TaskGridItem>
@@ -79,6 +98,10 @@ export const Task = ({taskId, status, todoId, title, priority, setModalActive}: 
                     <DotMenu openModal={openModal} rotate={90}/>
                 </TaskWrapper>
             </TaskGridItem>
+
+            {modalActive && <ModalTodo active={modalActive} setActive={setModalActive}>
+                <FormChangeTask task={task} setModalActive={setModalActive}/>
+            </ModalTodo>}
         </>
     );
 };
