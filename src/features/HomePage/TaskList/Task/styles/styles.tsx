@@ -5,7 +5,6 @@ import {FlexContainer} from "../../../../../styles/components";
 import {TaskStatuses} from "../../../../../api/todo-api";
 import {theme} from "../../../../../styles/theme";
 
-
 export const StatusIndicator = styled.div<{ status: TaskStatuses }>`
   width: 6px;
   height: 6px;
@@ -23,7 +22,7 @@ export const TaskWrapper = styled(FlexContainer)`
 export const PrioritiesEl = styled(SuperText)<{ priority: TaskPriorities }>`
   background-color: ${p => styledVariants[p.priority]};
   color: white;
-  padding: 3px 15px;
+  padding: 3px 15px 4px;
   border-radius: 30px;
 `
 
