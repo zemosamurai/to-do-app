@@ -31,11 +31,11 @@ export const Todo = ({todoId, title}: TodolistPropsType) => {
 
 
     return (
-        <TodoGridItem onClick={selectTodo} bg={isSelectTodoId === todoId}>
+        <TodoGridItem onClick={selectTodo} active={isSelectTodoId === todoId}>
             <TodoWrapper align={'center'} justify={'space-between'}>
                 <Title2>{title}</Title2>
 
-                {isSelectTodoId === todoId && <DotMenu openModal={openModal}/>}
+                {isSelectTodoId === todoId && <DotMenu fill={'white'} openModal={openModal}/>}
 
                 {modalActive && <ModalTodo active={modalActive} setActive={setModalActive}>
                     <FormChangeTodo todoId={todoId} title={title} setActive={setModalActive}/>

@@ -51,17 +51,15 @@ export const Task = ({task}: TaskPropsType) => {
         } else {
             return 'none date'
         }
-
     }
-
 
     return (
         <>
             <TaskGridItem paddingLeft={'20px'}>
                 <TaskWrapper>
                     <StatusIndicator status={task.status}/>
-                    <FlexContainer direction={'column'}>
-                        <Title3>{task.title}</Title3>
+                    <FlexContainer direction={'column'} rowGap={'5px'}>
+                        <SuperText size={'16px'} weight={600} color={'#000'}>{task.title}</SuperText>
                         <SuperText>
                             {!!task.description ? task.description : 'Description from task'}
                         </SuperText>

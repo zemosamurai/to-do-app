@@ -1,46 +1,46 @@
 import React from 'react';
-import {TaskGridItem} from "./styles/styles";
+import {TaskGridItem, TaskGridItemTitle} from "./styles/styles";
 import {SuperText} from "../../../styles/components";
 import {TaskWrapper} from "./Task/styles/styles";
 
 export const TaskTitleGridColumn = () => {
     return <>
-        <TaskGridItem bg paddingLeft={'20px'}>
+        <TaskGridItemTitle  paddingLeft={'20px'}>
             <TaskWrapper>
                 <SuperText>Status</SuperText>
             </TaskWrapper>
-        </TaskGridItem>
+        </TaskGridItemTitle>
 
-        <TaskGridItem bg>
+        <TaskGridItemTitle >
             <TaskWrapper>
                 <SuperText>
                     Task Progress
                 </SuperText>
             </TaskWrapper>
-        </TaskGridItem>
+        </TaskGridItemTitle>
 
-        <TaskGridItem bg>
+        <TaskGridItemTitle >
             <TaskWrapper>
                 <SuperText>
                     Dates
                 </SuperText>
             </TaskWrapper>
-        </TaskGridItem>
+        </TaskGridItemTitle>
 
-        <TaskGridItem bg>
+        <TaskGridItemTitle >
             <TaskWrapper>
                 <SuperText>
                     Priorities
                 </SuperText>
             </TaskWrapper>
-        </TaskGridItem>
+        </TaskGridItemTitle>
 
-        <TaskGridItem bg>
+        <TaskGridItemTitle >
             <TaskWrapper>
                 <SuperText>
                     Setting
                 </SuperText>
             </TaskWrapper>
-        </TaskGridItem>
+        </TaskGridItemTitle>
     </>
 }

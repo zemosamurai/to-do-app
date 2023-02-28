@@ -2,7 +2,7 @@ import React from 'react';
 import {useAppDispatch, useAppSelector} from "../../../store/hooks";
 import {addTodoTC, TodoDomainType} from "./Todo/todoSlice";
 import {Todo} from "./Todo/Todo";
-import {AddTodo, TodoGridContainer, TodoGridItem, TodoWrapper} from "./styles/styles";
+import {AddTodo, TodoGridContainer, TodoGridItem, TodoGridItemTitle, TodoWrapper} from "./styles/styles";
 import {SuperText} from "../../../styles/components";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 
@@ -25,13 +25,11 @@ export const TodoList = () => {
     return (
         <>
             <TodoGridContainer>
-                <TodoGridItem bg borderRight={'none'}>
+                <TodoGridItemTitle>
                     <TodoWrapper align={'center'} justify={'space-between'}>
-                        <SuperText>
-                            Project Name
-                        </SuperText>
+                        <SuperText>Project Name</SuperText>
                     </TodoWrapper>
-                </TodoGridItem>
+                </TodoGridItemTitle>
 
                 <AddTodo justify={'center'} align={'center'}>
                     <AddItemForm title={'Project'} addItem={addTodo}/>
